@@ -1,264 +1,373 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raghuveer — Choose</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Raghuveer Bhati</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        :root {
-            --bg: #030712;
-            --sky: #38bdf8;
-            --violet: #a78bfa;
-            --emerald: #34d399;
-            --white: #f0f9ff;
-            --dim: #334155;
-            --glow-sky: rgba(56, 189, 248, 0.18);
-            --glow-violet: rgba(167, 139, 250, 0.18);
-            --glow-emerald: rgba(52, 211, 153, 0.18);
-        }
+    :root {
+      --bg: #020409;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --sky: #38bdf8;
+      --violet: #c084fc;
+      --emerald: #2dd4bf;
+      --text: #e2e8f0;
+      --muted: #475569;
+    }
 
-        body {
-            background: var(--bg);
-            color: var(--white);
-            font-family: 'DM Sans', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        /* Ambient background blobs */
-        .blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.25;
-            pointer-events: none;
-            animation: drift 10s ease-in-out infinite alternate;
-        }
-        .blob-1 { width: 500px; height: 500px; background: var(--sky); top: -120px; left: -120px; animation-delay: 0s; }
-        .blob-2 { width: 400px; height: 400px; background: var(--violet); bottom: -100px; right: -100px; animation-delay: -5s; }
-        .blob-3 { width: 300px; height: 300px; background: var(--emerald); bottom: -60px; left: 20%; animation-delay: -3s; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      position: relative;
+    }
 
-        @keyframes drift {
-            from { transform: translate(0, 0) scale(1); }
-            to   { transform: translate(30px, 20px) scale(1.06); }
-        }
+    /* GRID BACKGROUND */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        /* Noise grain overlay */
-        body::after {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            background-size: 180px;
-            opacity: 0.5;
-            pointer-events: none;
-            z-index: 0;
-        }
+    /* AMBIENT ORBS */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 12s ease-in-out infinite alternate;
+    }
+    .orb-1 { width: 45vw; height: 45vw; max-width: 360px; max-height: 360px; background: rgba(56,189,248,0.12); top: -10%; left: -10%; animation-delay: 0s; }
+    .orb-2 { width: 40vw; height: 40vw; max-width: 300px; max-height: 300px; background: rgba(192,132,252,0.12); bottom: -10%; right: -10%; animation-delay: -6s; }
+    .orb-3 { width: 30vw; height: 30vw; max-width: 220px; max-height: 220px; background: rgba(45,212,191,0.08); bottom: 20%; left: 5%; animation-delay: -3s; }
 
-        .container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            padding: 2rem;
-        }
+    @keyframes orbFloat {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(20px, 15px) scale(1.08); }
+    }
 
-        .eyebrow {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--sky);
-            opacity: 0.7;
-            margin-bottom: 1rem;
-            animation: fadeUp 0.6s ease both;
-        }
+    /* WRAPPER */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(2.4rem, 7vw, 4.5rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            margin-bottom: 0.4rem;
-            animation: fadeUp 0.7s ease 0.1s both;
-        }
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s ease both;
+    }
 
-        h1 span.sky { color: var(--sky); }
-        h1 span.violet { color: var(--violet); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.2);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.65rem;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 1.2rem;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--sky);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.7); }
+    }
 
-        .subtitle {
-            font-size: 0.95rem;
-            color: #94a3b8;
-            margin-bottom: 3rem;
-            font-weight: 300;
-            animation: fadeUp 0.7s ease 0.2s both;
-        }
+    .name {
+      font-size: clamp(2rem, 9vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .name-first { color: var(--text); }
+    .name-last {
+      background: linear-gradient(135deg, var(--sky), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        .cards {
-            display: flex;
-            gap: 1.2rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeUp 0.8s ease 0.3s both;
-        }
+    .tagline {
+      font-size: clamp(0.78rem, 3vw, 0.88rem);
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
 
-        .card {
-            position: relative;
-            width: 240px;
-            padding: 2rem 1.6rem 1.8rem;
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.07);
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(12px);
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--white);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.7rem;
-        }
+    /* CARDS */
+    .cards {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 18px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+    /* Neon animated border via conic-gradient */
+    .card-wrap {
+      position: relative;
+      border-radius: 20px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .card-wrap:nth-child(1) { animation-delay: 0.15s; }
+    .card-wrap:nth-child(2) { animation-delay: 0.28s; }
+    .card-wrap:nth-child(3) { animation-delay: 0.41s; }
 
-        .card-1::before { background: var(--glow-sky); }
-        .card-2::before { background: var(--glow-violet); }
-        .card-3::before { background: var(--glow-emerald); }
+    /* Neon sweeping light on border */
+    .card-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1.5px;
+      border-radius: 21px;
+      background: conic-gradient(
+        from var(--a, 0turn),
+        transparent 0%,
+        transparent 30%,
+        var(--neon-color) 50%,
+        transparent 70%,
+        transparent 100%
+      );
+      animation: rotateBorder 3.5s linear infinite;
+      z-index: 0;
+    }
+    /* Mask so only the border rim is visible */
+    .card-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 1.5px;
+      border-radius: 19px;
+      background: var(--bg);
+      z-index: 1;
+    }
 
-        .card:hover::before { opacity: 1; }
+    .card-wrap-1 { --neon-color: var(--sky); }
+    .card-wrap-2 { --neon-color: var(--violet); animation-delay-inner: -1.2s; }
+    .card-wrap-3 { --neon-color: var(--emerald); }
 
-        .card-1:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.15);
-        }
+    .card-wrap-2::before { animation-delay: -1.2s; }
+    .card-wrap-3::before { animation-delay: -2.4s; }
 
-        .card-2:hover {
-            border-color: rgba(167, 139, 250, 0.4);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(167, 139, 250, 0.15);
-        }
+    @keyframes rotateBorder {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
 
-        .card-3:hover {
-            border-color: rgba(52, 211, 153, 0.4);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(52, 211, 153, 0.15);
-        }
+    .card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 1.25rem 1.4rem;
+      border-radius: 19px;
+      margin: 1.5px;
+      background: #0a0f1e;
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      transition: background 0.3s ease, transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        .card-icon {
-            font-size: 2rem;
-            line-height: 1;
-        }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.035) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover::before { opacity: 1; }
+    .card:active { transform: scale(0.975); background: #0d1426; }
 
-        .card-label {
-            font-family: 'Syne', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-        }
+    /* Icon */
+    .card-icon-box {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .card-wrap-1 .card-icon-box { background: rgba(56,189,248,0.1);  box-shadow: inset 0 0 0 1px rgba(56,189,248,0.15); }
+    .card-wrap-2 .card-icon-box { background: rgba(192,132,252,0.1); box-shadow: inset 0 0 0 1px rgba(192,132,252,0.15); }
+    .card-wrap-3 .card-icon-box { background: rgba(45,212,191,0.1);  box-shadow: inset 0 0 0 1px rgba(45,212,191,0.15); }
 
-        .card-1 .card-label { color: var(--sky); }
-        .card-2 .card-label { color: var(--violet); }
-        .card-3 .card-label { color: var(--emerald); }
+    .card-body { flex: 1; min-width: 0; }
 
-        .card-desc {
-            font-size: 0.8rem;
-            color: #64748b;
-            line-height: 1.5;
-            text-align: center;
-        }
+    .card-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.22rem;
+    }
+    .card-wrap-1 .card-tag { color: var(--sky); }
+    .card-wrap-2 .card-tag { color: var(--violet); }
+    .card-wrap-3 .card-tag { color: var(--emerald); }
 
-        .card-arrow {
-            margin-top: 0.4rem;
-            font-size: 1rem;
-            opacity: 0;
-            transform: translateX(-4px);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        .card-1 .card-arrow { color: var(--sky); }
-        .card-2 .card-arrow { color: var(--violet); }
-        .card-3 .card-arrow { color: var(--emerald); }
-        .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-        .divider {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #334155;
-            font-size: 0.75rem;
-            align-self: center;
-            margin-top: 0.3rem;
-        }
-        .divider::before, .divider::after {
-            content: '';
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, transparent, #334155, transparent);
-        }
+    .card-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.5;
+    }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    .card-arrow {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: transform 0.2s ease;
+    }
+    .card-wrap-1 .card-arrow { background: rgba(56,189,248,0.12);  color: var(--sky); }
+    .card-wrap-2 .card-arrow { background: rgba(192,132,252,0.12); color: var(--violet); }
+    .card-wrap-3 .card-arrow { background: rgba(45,212,191,0.12);  color: var(--emerald); }
+    .card:hover .card-arrow,
+    .card:active .card-arrow { transform: translate(2px, -2px); }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      color: #1e2a3a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeUp 0.7s ease 0.6s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MOBILE */
+    @media (max-width: 360px) {
+      .card { padding: 1rem 1rem; gap: 0.85rem; }
+      .card-icon-box { width: 44px; height: 44px; font-size: 1.2rem; border-radius: 12px; }
+      .card-title { font-size: 0.9rem; }
+    }
+  </style>
 </head>
 <body>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
 
-    <div class="container">
-        <p class="eyebrow">Raghuveer Bhati — Professional Profile</p>
-        <h1>Explore My <span class="sky">Work</span> &<br><span class="violet">Portfolio</span> <span class="sky">✦</span></h1>
-        <p class="subtitle">Choose what you'd like to explore — photography, dev work, or decentralized portfolio</p>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
-        <div class="cards">
-            <!-- Card 1: Photography Portfolio -->
-            <a class="card card-1" href="https://raghuveer033.github.io/photo/" target="_blank">
-                <div class="card-icon">📸</div>
-                <div class="card-label">Photography</div>
-                <div class="card-desc">Visual storytelling through the lens — creative photography portfolio</div>
-                <div class="card-arrow">→</div>
-            </a>
+  <div class="wrapper">
 
-            <div class="divider">•</div>
+    <header class="header">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Open to opportunities
+      </div>
+      <h1 class="name">
+        <span class="name-first">Raghuveer&nbsp;</span><span class="name-last">Singh</span>
+      </h1>
+      <p class="tagline">Developer · Photographer · Web3 Builder</p>
+    </header>
 
-            <!-- Card 2: Dev Portfolio -->
-            <a class="card card-2" href="https://raghublock.github.io/portfolio/" target="_blank">
-                <div class="card-icon">💻</div>
-                <div class="card-label">Dev Portfolio</div>
-                <div class="card-desc">Projects, skills & experience — full stack & blockchain development</div>
-                <div class="card-arrow">→</div>
-            </a>
+    <div class="cards">
 
-            <div class="divider">•</div>
+      <div class="card-wrap card-wrap-1">
+        <a class="card" href="https://raghuveer033.github.io/photo/" target="_blank" rel="noopener">
+          <div class="card-icon-box">📸</div>
+          <div class="card-body">
+            <div class="card-tag">Creative</div>
+            <div class="card-title">Photography Portfolio</div>
+            <div class="card-desc">Visual storytelling & creative work</div>
+          </div>
+          <div class="card-arrow">↗</div>
+        </a>
+      </div>
 
-            <!-- Card 3: IPFS / Decentralized Resume -->
-            <a class="card card-3" href="https://ipfs.io/ipfs/bafybeiakc5ijeetuvoxacg6emrk37y3pe6xlhhxbraen343bllvbtcva24/" target="_blank">
-                <div class="card-icon">🔗</div>
-                <div class="card-label">Web3 Resume</div>
-                <div class="card-desc">Decentralized resume hosted on IPFS — tamper-proof & permanent</div>
-                <div class="card-arrow">→</div>
-            </a>
-        </div>
+      <div class="card-wrap card-wrap-2">
+        <a class="card" href="https://raghublock.github.io/portfolio/" target="_blank" rel="noopener">
+          <div class="card-icon-box">💻</div>
+          <div class="card-body">
+            <div class="card-tag">Engineering</div>
+            <div class="card-title">Dev Portfolio</div>
+            <div class="card-desc">Projects, skills & full-stack experience</div>
+          </div>
+          <div class="card-arrow">↗</div>
+        </a>
+      </div>
+
+      <div class="card-wrap card-wrap-3">
+        <a class="card" href="https://ipfs.io/ipfs/bafybeiakc5ijeetuvoxacg6emrk37y3pe6xlhhxbraen343bllvbtcva24/" target="_blank" rel="noopener">
+          <div class="card-icon-box">🔗</div>
+          <div class="card-body">
+            <div class="card-tag">Web3</div>
+            <div class="card-title">Decentralized Resume</div>
+            <div class="card-desc">Permanent résumé hosted on IPFS</div>
+          </div>
+          <div class="card-arrow">↗</div>
+        </a>
+      </div>
+
     </div>
+
+    <p class="footer">raghuveer bhati &nbsp;·&nbsp; 2025</p>
+  </div>
+
 </body>
 </html>
-

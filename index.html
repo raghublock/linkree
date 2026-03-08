@@ -1,18 +1,263 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-    <meta http-equiv="refresh" content="0; url=https://raghuveer033.github.io/photo/">
-    <title>Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raghuveer — Choose</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        body { background: #030712; color: #38bdf8; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #030712;
+            --sky: #38bdf8;
+            --violet: #a78bfa;
+            --emerald: #34d399;
+            --white: #f0f9ff;
+            --dim: #334155;
+            --glow-sky: rgba(56, 189, 248, 0.18);
+            --glow-violet: rgba(167, 139, 250, 0.18);
+            --glow-emerald: rgba(52, 211, 153, 0.18);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient background blobs */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            pointer-events: none;
+            animation: drift 10s ease-in-out infinite alternate;
+        }
+        .blob-1 { width: 500px; height: 500px; background: var(--sky); top: -120px; left: -120px; animation-delay: 0s; }
+        .blob-2 { width: 400px; height: 400px; background: var(--violet); bottom: -100px; right: -100px; animation-delay: -5s; }
+        .blob-3 { width: 300px; height: 300px; background: var(--emerald); bottom: -60px; left: 20%; animation-delay: -3s; }
+
+        @keyframes drift {
+            from { transform: translate(0, 0) scale(1); }
+            to   { transform: translate(30px, 20px) scale(1.06); }
+        }
+
+        /* Noise grain overlay */
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            background-size: 180px;
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--sky);
+            opacity: 0.7;
+            margin-bottom: 1rem;
+            animation: fadeUp 0.6s ease both;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.4rem, 7vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.4rem;
+            animation: fadeUp 0.7s ease 0.1s both;
+        }
+
+        h1 span.sky { color: var(--sky); }
+        h1 span.violet { color: var(--violet); }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            animation: fadeUp 0.7s ease 0.2s both;
+        }
+
+        .cards {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+
+        .card {
+            position: relative;
+            width: 240px;
+            padding: 2rem 1.6rem 1.8rem;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.07);
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(12px);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--white);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-1::before { background: var(--glow-sky); }
+        .card-2::before { background: var(--glow-violet); }
+        .card-3::before { background: var(--glow-emerald); }
+
+        .card:hover::before { opacity: 1; }
+
+        .card-1:hover {
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(56, 189, 248, 0.15);
+        }
+
+        .card-2:hover {
+            border-color: rgba(167, 139, 250, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(167, 139, 250, 0.15);
+        }
+
+        .card-3:hover {
+            border-color: rgba(52, 211, 153, 0.4);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(52, 211, 153, 0.15);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        .card-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .card-1 .card-label { color: var(--sky); }
+        .card-2 .card-label { color: var(--violet); }
+        .card-3 .card-label { color: var(--emerald); }
+
+        .card-desc {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .card-arrow {
+            margin-top: 0.4rem;
+            font-size: 1rem;
+            opacity: 0;
+            transform: translateX(-4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .card-1 .card-arrow { color: var(--sky); }
+        .card-2 .card-arrow { color: var(--violet); }
+        .card-3 .card-arrow { color: var(--emerald); }
+        .card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #334155;
+            font-size: 0.75rem;
+            align-self: center;
+            margin-top: 0.3rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, #334155, transparent);
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <p>Redirecting to Raghuveer's Portfolio...</p>
-    <script>
-        // Backup redirect agar meta tag fail ho jaye
-        window.location.href = "https://raghuveer033.github.io/photo/";
-    </script>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="container">
+        <p class="eyebrow">Raghuveer Singh — Professional Profile</p>
+        <h1>Explore My <span class="sky">Work</span> &<br><span class="violet">Portfolio</span> <span class="sky">✦</span></h1>
+        <p class="subtitle">Choose what you'd like to explore — photography, dev work, or decentralized portfolio</p>
+
+        <div class="cards">
+            <!-- Card 1: Photography Portfolio -->
+            <a class="card card-1" href="https://raghuveer033.github.io/photo/" target="_blank">
+                <div class="card-icon">📸</div>
+                <div class="card-label">Photography</div>
+                <div class="card-desc">Visual storytelling through the lens — creative photography portfolio</div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <div class="divider">•</div>
+
+            <!-- Card 2: Dev Portfolio -->
+            <a class="card card-2" href="https://raghublock.github.io/portfolio/" target="_blank">
+                <div class="card-icon">💻</div>
+                <div class="card-label">Dev Portfolio</div>
+                <div class="card-desc">Projects, skills & experience — full stack & blockchain development</div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <div class="divider">•</div>
+
+            <!-- Card 3: IPFS / Decentralized Resume -->
+            <a class="card card-3" href="https://ipfs.io/ipfs/bafybeiakc5ijeetuvoxacg6emrk37y3pe6xlhhxbraen343bllvbtcva24/" target="_blank">
+                <div class="card-icon">🔗</div>
+                <div class="card-label">Web3 Resume</div>
+                <div class="card-desc">Decentralized resume hosted on IPFS — tamper-proof & permanent</div>
+                <div class="card-arrow">→</div>
+            </a>
+        </div>
+    </div>
 </body>
 </html>
-
